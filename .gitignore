@@ -1,0 +1,6 @@
+.env
+.vscode
+.idea
+.data
+build/
+vendor/
