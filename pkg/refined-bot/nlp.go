@@ -2,6 +2,7 @@ package refinedbot
 
 import (
 	"fmt"
+	"log"
 	"strings"
 
 	"gopkg.in/jdkato/prose.v2"
@@ -13,7 +14,7 @@ type NLP struct {
 
 // actionPatterns links together the action name with the expected pattern of tokens.
 var actionPatterns = map[string][]string{
-	StartPokerAction: []string{
+	StartPokerAction: {
 		"NNS VBP CD .",
 		"MD PRP VB NNP .",
 	},
@@ -46,28 +47,33 @@ func (n *NLP) match(tokens []prose.Token, pattern string) bool {
 }
 
 // patternMatch based on global patterns, running match function against them until match.
-func (n *NLP) patternMatch(tokens []prose.Token) string {
+func (n *NLP) patternMatch(tokens []prose.Token) (string, error) {
 	for action, patterns := range actionPatterns {
 		for _, pattern := range patterns {
 			if n.match(tokens, pattern) {
-				return action
+				return action, nil
 			}
 		}
 	}
-	return ""
+	return "", fmt.Errorf("unable to identify action")
 }
 
 // Parse will parse an phrase and try to identify the intent. It can return error on creating a
 // document instance, and on identifying intent.
 func (n *NLP) Parse(phrase string) (*Intent, error) {
-	doc, err := prose.NewDocument(phrase, prose.UsingModel(n.model))
+	// doc, err := prose.NewDocument(phrase, prose.UsingModel(n.model))
+	doc, err := prose.NewDocument(phrase)
 	if err != nil {
 		return nil, err
 	}
 
-	action := n.patternMatch(doc.Tokens())
-	if action == "" {
-		return nil, fmt.Errorf("unable to identify action")
+	for _, entity := range doc.Entities() {
+		log.Printf("entity='%#v'\n", entity)
+	}
+
+	action, err := n.patternMatch(doc.Tokens())
+	if err != nil {
+		return nil, err
 	}
 	return &Intent{Action: action, Subject: ""}, nil
 }
