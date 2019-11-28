@@ -1,6 +1,7 @@
-.env
-.vscode
-.idea
-.data
-build/
-vendor/
+.vscode/
+.idea/
+venv
+*.egg-info/
+*.pytest*
+__pycache__
+.tox/
