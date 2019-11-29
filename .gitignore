@@ -1,7 +1,9 @@
-.vscode/
+__pycache__
+.data/
+.env
 .idea/
-venv
+.tox/
+.venv*
+.vscode/
 *.egg-info/
 *.pytest*
-__pycache__
-.tox/
