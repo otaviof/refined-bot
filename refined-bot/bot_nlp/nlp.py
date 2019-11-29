@@ -20,6 +20,7 @@ class NLP():
     ticketIdRe = r'[A-Z]{3,6}\-[0-9]{1,4}'
     ticketIdPattern = [{'TAG': {'REGEX': ticketIdRe}}]
 
+    # TODO: make sure spacy's "download" process is executed during initialization;
     def __init__(self):
         """
             Instantiate class by executing spacy boilerplates.
