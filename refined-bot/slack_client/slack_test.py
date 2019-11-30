@@ -5,7 +5,7 @@ import pytest
 
 import constant
 
-from .client import Client
+from .slack import SlackClient
 
 
 def onMessageFn(**payload):
@@ -13,9 +13,9 @@ def onMessageFn(**payload):
 
 
 def test_client():
-    c = Client(
+    s = SlackClient(
         token=os.environ[constant.BOT_ACCESS_TOKEN],
         onMessageFn=onMessageFn,
     )
-    c.start()
+    s.start()
     time.sleep(300)

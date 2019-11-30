@@ -1,11 +1,12 @@
 import ssl
+import time
 
 import certifi
 import slack
 from slack import RTMClient
 
 
-class Client():
+class SlackClient():
     """
         Represents Slack client instance.
     """
