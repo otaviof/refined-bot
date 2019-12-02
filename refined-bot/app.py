@@ -2,21 +2,22 @@ import os
 
 import constant
 from bot_nlp import nlp
-from slack_client import client, event
+from slack_client import slack, event
 
 
 class App():
     """
         Primary instance for refined-bot, glues together the components.
     """
+
     nlp = nlp.NLP()
-    slackClient: client.Client = None
+    slackClient: slack.SlackClient = None
 
     def __init__(self):
         """
             Instantiate components.
         """
-        self.slackClient = client.Client(
+        self.slackClient = slack.SlackClient(
             token=os.environ[constant.BOT_ACCESS_TOKEN],
             onMessageFn=self.onMessage,
         )

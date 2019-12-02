@@ -2,6 +2,10 @@
 version: "2"
 
 services:
+  #
+  # Jira-Core running with local ".data" directory shared.
+  #   https://github.com/cptactionhank/docker-atlassian-jira
+  #
   jira:
     image: cptactionhank/atlassian-jira:latest
     hostname: jira.localtest.me

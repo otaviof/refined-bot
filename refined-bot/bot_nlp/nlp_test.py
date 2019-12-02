@@ -1,14 +1,15 @@
 import pytest
+
 from .nlp import NLP
 
 
 def test_parse():
-    ticketId = 'XYZ-1234'
-    text = 'lets poker %s?' % ticketId
+    issueId = 'XYZ-1234'
+    text = 'lets poker %s?' % issueId
 
     n = NLP()
     intent = n.parse(text)
 
     assert intent.action == 'poker'
-    assert intent.subject == ticketId
+    assert intent.subject == issueId
     assert intent.text == text

@@ -2,7 +2,7 @@ import re
 
 import spacy
 from spacy.lang.en import English
-from spacy.matcher import Matcher
+# from spacy.matcher import Matcher
 from spacy.tokens import Token
 
 from .intent import Intent
@@ -14,11 +14,11 @@ class NLP():
     """
 
     nlp: English = None
-    matcher: Matcher = None
+    # matcher: Matcher = None
 
-    # regular expression to find an ticket
-    ticketIdRe = r'[A-Z]{3,6}\-[0-9]{1,4}'
-    ticketIdPattern = [{'TAG': {'REGEX': ticketIdRe}}]
+    # regular expression to find an issue-id
+    issueIdRe = r'[A-Z]{3,6}\-[0-9]{1,4}'
+    issueIdPattern = [{'TAG': {'REGEX': issueIdRe}}]
 
     # TODO: make sure spacy's "download" process is executed during initialization;
     def __init__(self):
@@ -26,14 +26,14 @@ class NLP():
             Instantiate class by executing spacy boilerplates.
         """
         self.nlp = spacy.load('en_core_web_sm')
-        self.matcher = Matcher(self.nlp.vocab, validate=True)
-        self.matcher.add('TicketID', None, self.ticketIdPattern)
+        # self.matcher = Matcher(self.nlp.vocab, validate=True)
+        # self.matcher.add('IssueId', None, self.issueIdPattern)
 
     def __findTicketID(self, doc: Token.doc) -> str:
         """
             Using regexp will try to find a ticket ID.
         """
-        for match in re.finditer(self.ticketIdRe, doc.text):
+        for match in re.finditer(self.issueIdRe, doc.text):
             start, end = match.span()
             span = doc.char_span(start, end)
             if span is not None:
