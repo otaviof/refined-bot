@@ -36,7 +36,7 @@ spacy==2.2.3
 srsly==0.2.0
 thinc==7.3.1
 tqdm==4.39.0
-urllib3==1.25.8
+urllib3==1.26.5
 wasabi==0.4.0
 wcwidth==0.1.7
 yarl==1.4.1
